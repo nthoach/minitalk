@@ -6,7 +6,7 @@
 #    By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 17:16:25 by pabertha          #+#    #+#              #
-#    Updated: 2023/12/21 18:23:20 by honguyen         ###   ########.fr        #
+#    Updated: 2023/12/25 18:46:44 by honguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,9 @@ SRC = ft_isalpha.c \
 	printf_u.c \
 	printf_x.c \
 	utils_blanks.c \
+	utils_printf.c \
+	utils_printfdi.c \
+	utils_printfu.c \
 	utils_sign.c \
 	get_next_line.c \
 	get_next_line_bonus.c \
@@ -80,10 +83,7 @@ OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
-		ar rcs $(NAME) $(OBJ)
-
-bonus : $(OBJ) $(OBJ_BONUS)
+$(NAME) : $(OBJ) $(OBJ_BONUS)
 		ar rcs $(NAME) $(OBJ) $(OBJ_BONUS)
 
 %.o : %.c libft.h
