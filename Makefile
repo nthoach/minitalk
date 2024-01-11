@@ -6,7 +6,7 @@
 #    By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/25 13:18:39 by honguyen          #+#    #+#              #
-#    Updated: 2023/12/25 18:56:41 by honguyen         ###   ########.fr        #
+#    Updated: 2024/01/11 16:11:19 by honguyen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,8 +74,6 @@ $(LIBFT):
 bonus: $(OBJ_BNS) $(LIBFT)
 	$(CC) $(CFLAGS) client_bonus.o libft/libft.a -o client_bonus
 	$(CC) $(CFLAGS) server_bonus.o libft/libft.a -o server_bonus
-
-
 
 clean:
 	$(RM) $(OBJ) $(OBJ_BNS)

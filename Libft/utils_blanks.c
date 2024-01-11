@@ -6,11 +6,11 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 13:47:55 by honguyen          #+#    #+#             */
-/*   Updated: 2023/12/04 20:30:33 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:11:19 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	print_precision(t_formats *formats, int no_digit)
 {
