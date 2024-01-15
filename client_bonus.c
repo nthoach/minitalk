@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/15 09:45:15 by damachad          #+#    #+#             */
-/*   Updated: 2023/06/29 15:22:26 by damachad         ###   ########.fr       */
+/*   Created: 2024/01/15 18:23:34 by honguyen          #+#    #+#             */
+/*   Updated: 2024/01/15 19:12:16 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "minitalk_bonus.h"
 
-/*Send specific character, bit by bit.
-Iterate through each bit of the current character and uses the bitwise AND 
-operator to check its value. If the current bit is 1, send SIGUSR1, else 
-(bit is 0) send SIGUSR2. Sleep for 400 miliseconds between each signal.*/
+/*send a character by sending bit by bit starting from most-valueed bit to the least
+SIGUSR1 will send 1 and SIGUSR2 will sent 0 */
 
-void	send_char(int server_pid, char c)
+void	send_char(int server_pid, char ch)
 {
 	int	bit;
-	int	z;
+	int	one;
 
 	bit = 0;
-	z = 128;
+	one = 128;
 	while (bit++ < 8)
 	{
-		if (c & z)
+		if (ch & one)
 		{
 			if (kill(server_pid, SIGUSR1) == -1)
 				ft_printf("Error: Unable to send SIGUSR1.\n");
@@ -36,34 +35,32 @@ void	send_char(int server_pid, char c)
 			if (kill(server_pid, SIGUSR2) == -1)
 				ft_printf("Error: Unable to send SIGUSR2.\n");
 		}
-		z >>= 1;
+		one >>= 1;
 		usleep(100);
 	}
 }
 
-/*Send message, character by character, bit by bit.
-Iterate through each bit of the current character and uses the bitwise AND 
-operator to check its value. If the current bit is 1, send SIGUSR1, else 
-(bit is 0) send SIGUSR2. Sleep for 400 miliseconds between each signal.*/
+/* send .*/
 
-void	send_bits(int server_pid, char *msg)
+void	send_string(int server_pid, char *msg)
 {
-	int				bit;
-	unsigned char	z;
+//	int				bit;
+//	unsigned char	z;
 
 	while (*msg)
 	{
-		bit = 0;
-		z = 128;
-		while (bit++ < 8)
-		{
-			if (*msg & z)
-				kill(server_pid, SIGUSR1);
-			else
-				kill(server_pid, SIGUSR2);
-			z >>= 1;
-			usleep(100);
-		}
+		send_char(server_pid, *msg);
+		// bit = 0;
+		// z = 128;
+		// while (bit++ < 8)
+		// {
+		// 	if (*msg & z)
+		// 		kill(server_pid, SIGUSR1);
+		// 	else
+		// 		kill(server_pid, SIGUSR2);
+		// 	z >>= 1;
+		// 	usleep(100);
+		// }
 		msg++;
 	}
 	if (!*msg)
@@ -103,7 +100,7 @@ int	main(int argc, char **argv)
 		server_pid = ft_atoi(argv[1]);
 		sigaction(SIGUSR1, &sa, NULL);
 		sigaction(SIGUSR2, &sa, NULL);
-		send_bits(server_pid, argv[2]);
+		send_string(server_pid, argv[2]);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 09:45:15 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/11 15:48:21 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:30:26 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@ Iterate through each bit of the current character.
 If the current bit is 1, send SIGUSR1, else (bit is 0) send SIGUSR2.
 Sleep for 100 miliseconds between each signal.*/
 
-void	send_bits(char c, int server_pid)
+void	send_char(char ch, int server_pid)
 {
 	int				bit;
-	unsigned char	z;
+	unsigned char	one;
 
 	bit = 0;
-	z = 128;
+	one = 128;
 	while (bit < 8)
 	{
-		if (c & z)
+		if (ch & one)
 			kill(server_pid, SIGUSR1);
 		else
 			kill(server_pid, SIGUSR2);
-		z >>= 1;
+		one >>= 1;
 		bit++;
 		usleep(100);
 	}
@@ -50,10 +50,10 @@ int	main(int argc, char **argv)
 		server_pid = ft_atoi(argv[1]);
 		while (argv[2][i] != '\0')
 		{
-			send_bits(argv[2][i], server_pid);
+			send_char(argv[2][i], server_pid);
 			i++;
 		}
-		send_bits('\n', server_pid);
+		send_char('\n', server_pid);
 	}
 	else
 	{
