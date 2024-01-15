@@ -6,7 +6,7 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 09:45:15 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/15 17:30:26 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/15 20:13:18 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	send_char(char ch, int server_pid)
 			kill(server_pid, SIGUSR2);
 		one >>= 1;
 		bit++;
-		usleep(100);
+		usleep(10);
 	}
 }
 

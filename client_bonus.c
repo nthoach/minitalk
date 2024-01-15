@@ -6,7 +6,7 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:23:34 by honguyen          #+#    #+#             */
-/*   Updated: 2024/01/15 19:12:16 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/15 20:22:28 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	send_char(int server_pid, char ch)
 				ft_printf("Error: Unable to send SIGUSR2.\n");
 		}
 		one >>= 1;
-		usleep(100);
+		usleep(50);
 	}
 }
 
@@ -73,7 +73,7 @@ void	send_string(int server_pid, char *msg)
 /*Create a counter for every character printed and, when 
 full message is received by the server, print the counter*/
 
-void	handler(int sign)
+void	recv_print(int sign)
 {
 	static int	count;
 
@@ -95,7 +95,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 3)
 	{
-		sa.sa_handler = &handler;
+		sa.sa_handler = &recv_print;
 		sa.sa_flags = SA_SIGINFO;
 		server_pid = ft_atoi(argv[1]);
 		sigaction(SIGUSR1, &sa, NULL);
