@@ -6,7 +6,7 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 09:45:15 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/15 20:13:18 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:26:11 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	send_char(char ch, int server_pid)
 	unsigned char	one;
 
 	bit = 0;
-	one = 128;
-	while (bit < 8)
+	one = 0b10000000;
+	while (bit <= 7)
 	{
 		if (ch & one)
 			kill(server_pid, SIGUSR1);
@@ -32,7 +32,7 @@ void	send_char(char ch, int server_pid)
 			kill(server_pid, SIGUSR2);
 		one >>= 1;
 		bit++;
-		usleep(10);
+		usleep(50);
 	}
 }
 

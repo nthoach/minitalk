@@ -6,13 +6,15 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 17:19:41 by honguyen          #+#    #+#             */
-/*   Updated: 2024/01/11 16:21:03 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:14:44 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
+/* if success with '\0' send SIGUSR1
+else print char and send SIGUSR2 */
 
-void	handle(int signo, siginfo_t *info, void *context)
+void	print_sendback(int signo, siginfo_t *info, void *context)
 {
 	static int	bit;
 	static int	character;
@@ -26,7 +28,7 @@ void	handle(int signo, siginfo_t *info, void *context)
 		if (character == '\0')
 		{
 			if (kill(info->si_pid, SIGUSR1) == -1)
-				ft_printf("Error on sending SIGUSR1 \n");
+				ft_printf("Sending SIGUSR1 Got Error \n");
 		}
 		if (character != '\0')
 		{
@@ -42,17 +44,17 @@ int	main(void)
 {
 	struct sigaction	sa;
 
-	ft_printf("Process Indentifier (PID) of the Sever: %d\n", getpid());
-	sa.sa_sigaction = &handle;
+	ft_printf("Server's Process Indentifier (PID): %d\n", getpid());
+	sa.sa_sigaction = &print_sendback;
 	sa.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
 	{
-		ft_printf("Error on setting up signal: SIGUSR1\n");
+		ft_printf("Getting error when setting up signal: SIGUSR1\n");
 		return (1);
 	}
 	if (sigaction(SIGUSR2, &sa, NULL) == -1)
 	{
-		ft_printf("Error on setting up signal: SIGUSR2\n");
+		ft_printf("Getting error when setting up signal: SIGUSR2\n");
 		return (2);
 	}
 	while (1)

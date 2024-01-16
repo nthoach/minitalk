@@ -6,7 +6,7 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 17:00:38 by marvin            #+#    #+#             */
-/*   Updated: 2024/01/11 16:27:12 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:10:46 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <fcntl.h>
 # include <stdint.h> 
 # include <stdio.h>
-
 
 typedef struct s_list
 {
@@ -97,41 +96,41 @@ typedef struct s_formats
 /* two numbers for length-width */
 /* sign for printing sign or not*/
 
-int		ft_printf(const	char *s_in, ...);
-int		print_types(va_list ap, t_formats *formats, char **s);
-void	get_flags(t_formats *formats, char **s);
-void	get_width_prcn(int *width, char **s);
-int		print_c(char c, t_formats *formats);
-int		print_s(char *s, t_formats *formats);
-int		print_p(unsigned long p, t_formats *formats);
-int		print_di(int n, t_formats *formats);
-int		print_di1(t_formats *formats, int n);
-int		print_di2(t_formats *formats, int n);
-int		print_di3(t_formats *formats, int n);
-int		print_di4(t_formats *formats, int n);
-int		print_u(unsigned int u, t_formats *formats);
-int		print_x(unsigned int x, t_formats *formats, char c);
-int		print_precision(t_formats *formats, int no_digit);
-int		print_width(t_formats *formats, int len_total, char c);
-int		print_sign(t_formats *formats, int n);
-void	print_hex(unsigned long n, char x, t_formats *formats, int *np);
-int		print_0x(t_formats *formats, char c, unsigned int x);
-int		len_s_base(unsigned long n, int base);
-int		len_uint(unsigned int n, t_formats formats, int base);
-int		len_int(int n);
-int		totalize_len(int n, int no_digit, t_formats *formats);
-int		total_len(int precision, int len_u);
-void	ft_putpnbr(unsigned int n, t_formats *formats, int *np);
-void	ft_putnbr(long n, int *p_np, int *err);
-int		ft_putxstr(char *s, int len, int *err);
-int		ft_putnchar(char c, int n, int *err);
-size_t	gnl_len(char	*s);
-void	gnl_bzero(void *s, size_t n);
-void	*gnl_calloc(size_t count, size_t size);
-char	*add_text(char *store_in, char *buffer);
-size_t	gnl_strchr(char	*buffer, char chr);
-char	*extract_line(char *store_text);
-char	*read_line(char	*store_text, int fd);
-char	*get_next_line(int fd);
+int			ft_printf(const	char *s_in, ...);
+int			print_types(va_list ap, t_formats *formats, char **s);
+void		get_flags(t_formats *formats, char **s);
+void		get_width_prcn(int *width, char **s);
+int			print_c(char c, t_formats *formats);
+int			print_s(char *s, t_formats *formats);
+int			print_p(unsigned long p, t_formats *formats);
+int			print_di(int n, t_formats *formats);
+int			print_di1(t_formats *formats, int n);
+int			print_di2(t_formats *formats, int n);
+int			print_di3(t_formats *formats, int n);
+int			print_di4(t_formats *formats, int n);
+int			print_u(unsigned int u, t_formats *formats);
+int			print_x(unsigned int x, t_formats *formats, char c);
+int			print_precision(t_formats *formats, int no_digit);
+int			print_width(t_formats *formats, int len_total, char c);
+int			print_sign(t_formats *formats, int n);
+void		print_hex(unsigned long n, char x, t_formats *formats, int *np);
+int			print_0x(t_formats *formats, char c, unsigned int x);
+int			len_s_base(unsigned long n, int base);
+int			len_uint(unsigned int n, t_formats formats, int base);
+int			len_int(int n);
+int			totalize_len(int n, int no_digit, t_formats *formats);
+int			total_len(int precision, int len_u);
+void		ft_putpnbr(unsigned int n, t_formats *formats, int *np);
+void		ft_putnbr(long n, int *p_np, int *err);
+int			ft_putxstr(char *s, int len, int *err);
+int			ft_putnchar(char c, int n, int *err);
+size_t		gnl_len(char	*s);
+void		gnl_bzero(void *s, size_t n);
+void		*gnl_calloc(size_t count, size_t size);
+char		*add_text(char *store_in, char *buffer);
+size_t		gnl_strchr(char	*buffer, char chr);
+char		*extract_line(char *store_text);
+char		*read_line(char	*store_text, int fd);
+char		*get_next_line(int fd);
 
 #endif

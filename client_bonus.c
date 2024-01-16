@@ -6,15 +6,14 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:23:34 by honguyen          #+#    #+#             */
-/*   Updated: 2024/01/15 20:22:28 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:26:07 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minitalk_bonus.h"
 
-/*send a character by sending bit by bit starting from most-valueed bit to the least
-SIGUSR1 will send 1 and SIGUSR2 will sent 0 */
+/*send a character by sending bit by bit starting from most-valueed bit to 
+the least one, SIGUSR1 will send 1 and SIGUSR2 will sent 0 */
 
 void	send_char(int server_pid, char ch)
 {
@@ -22,7 +21,7 @@ void	send_char(int server_pid, char ch)
 	int	one;
 
 	bit = 0;
-	one = 128;
+	one = 0b10000000;
 	while (bit++ < 8)
 	{
 		if (ch & one)
@@ -40,27 +39,14 @@ void	send_char(int server_pid, char ch)
 	}
 }
 
-/* send .*/
+/* send the whole string char by char, send newline and zero
+char to mark the end */
 
 void	send_string(int server_pid, char *msg)
 {
-//	int				bit;
-//	unsigned char	z;
-
 	while (*msg)
 	{
 		send_char(server_pid, *msg);
-		// bit = 0;
-		// z = 128;
-		// while (bit++ < 8)
-		// {
-		// 	if (*msg & z)
-		// 		kill(server_pid, SIGUSR1);
-		// 	else
-		// 		kill(server_pid, SIGUSR2);
-		// 	z >>= 1;
-		// 	usleep(100);
-		// }
 		msg++;
 	}
 	if (!*msg)
@@ -70,20 +56,24 @@ void	send_string(int server_pid, char *msg)
 	}
 }
 
-/*Create a counter for every character printed and, when 
-full message is received by the server, print the counter*/
+/*receiving back signal from the server
+if SIGUSR1 means server recevieed and prince out the result
+if not SIGUSR1 (SIGUSR2) mean counting  the bytes
+the variabe "bt_ct" is set at zero with the main program, counting up at every
+time the server send SIGUSR2 as it printing a char - 1 byte
+total bytes sent is by_ct - 1 because we exculude the additioanl '\n' */
 
 void	recv_print(int sign)
 {
-	static int	count;
+	static int	by_ct;
 
 	if (sign == SIGUSR1)
 	{
-		ft_printf("Message received.\n%d bytes.\n", (count - 1));
+		ft_printf("Message received.\n%d bytes.\n", (by_ct - 1));
 		exit(0);
 	}
-	else
-		count++;
+	else if (sign == SIGUSR2)
+		by_ct++;
 }
 
 /*Validate number of arguments and send the message to the send_bits function*/
