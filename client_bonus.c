@@ -6,14 +6,15 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:23:34 by honguyen          #+#    #+#             */
-/*   Updated: 2024/01/16 17:26:07 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:21:45 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
-/*send a character by sending bit by bit starting from most-valueed bit to 
-the least one, SIGUSR1 will send 1 and SIGUSR2 will sent 0 */
+/*send a character by sending bit by bit starting from most-valued bit to 
+the least one, SIGUSR1 will send 1 and SIGUSR2 will sent 0, error message
+when signal cannot send, 50 us for delay between bit sending*/
 
 void	send_char(int server_pid, char ch)
 {
@@ -40,7 +41,7 @@ void	send_char(int server_pid, char ch)
 }
 
 /* send the whole string char by char, send newline and zero
-char to mark the end */
+chars to mark the end */
 
 void	send_string(int server_pid, char *msg)
 {
@@ -76,7 +77,7 @@ void	recv_print(int sign)
 		by_ct++;
 }
 
-/*Validate number of arguments and send the message to the send_bits function*/
+/* register the handler fuction to both interupt signal SIGUSR1 and SIGUSR2*/
 
 int	main(int argc, char **argv)
 {
@@ -91,14 +92,14 @@ int	main(int argc, char **argv)
 		sigaction(SIGUSR1, &sa, NULL);
 		sigaction(SIGUSR2, &sa, NULL);
 		send_string(server_pid, argv[2]);
+		while (1)
+			pause();
 	}
 	else
 	{
-		ft_printf("Invalid number of arguments.\n");
-		ft_printf("Usage: ./client [server PID] [message]\n");
+		ft_printf("Number of arguments should be 2.\n");
+		ft_printf("e.g.: ./client [PID] [message]\n");
 		return (1);
 	}
-	while (1)
-		pause();
 	return (0);
 }

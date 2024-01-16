@@ -6,16 +6,15 @@
 /*   By: honguyen <honguyen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 09:45:15 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/16 17:26:11 by honguyen         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:32:08 by honguyen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-/*Send message, character by character, bit by bit.
-Iterate through each bit of the current character. 
-If the current bit is 1, send SIGUSR1, else (bit is 0) send SIGUSR2.
-Sleep for 100 miliseconds between each signal.*/
+/*send char each bit, 1 for SIGUSR1 and - for SIGUSR2
+send highest-value bit first., each bit send will be delay 50 us
+to ensure data transfer without loss*/
 
 void	send_char(char ch, int server_pid)
 {
@@ -57,8 +56,8 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		ft_printf("Invalid number of arguments.\n");
-		ft_printf("Usage: ./client [server PID] [message]\n");
+		ft_printf("Number of arguments should be 2.\n");
+		ft_printf("e.g: ./client [PID no] [message]\n");
 		return (1);
 	}
 	return (0);
